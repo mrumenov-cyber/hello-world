@@ -17,13 +17,13 @@ export default class Chat extends React.Component {
         backgroundColor: bgColor
         }}>
         <Text style={{
-          fontSize: 30,
+          fontSize: 18,
           color: '#555555',
           backgroundColor: '#FFFFFF',
           fontWeight: "400",
           padding: 20,
           borderRadius: 40,
-          margin: 50,
+          margin: 15,
         }}>Hello {name}, Welcome to Chatting!</Text>
       </View>
     )
