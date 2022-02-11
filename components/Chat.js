@@ -45,6 +45,11 @@ export default class Chat extends React.Component {
      // Adds the name to top of screen
      this.props.navigation.setOptions({ title: name })
 
+     //Creating references to my messages collection
+     this.referenceChatMessages = firebase
+     .firestore()
+     .collection("messages");
+
     this.authUnsubscribe = firebase.auth().onAuthStateChanged((user) => {
       if (!user) {
         firebase.auth().signInAnonymously();
@@ -52,7 +57,6 @@ export default class Chat extends React.Component {
       //update user state with currently active user data
       this.setState({
         uid: user.uid,
-        loggedInText: 'Hello '+ name,
         messages: [],
         user: {
           _id: user.uid,
@@ -88,17 +92,12 @@ export default class Chat extends React.Component {
     });
   };
 
-  //dont receive updates from collection
-  componentWillUnmount() {
-    this.authUnsubscribe();
-    this.unsubscribe();
-  }
 
 
   //adding new message to database collection
   addMessage() {
     const message = this.state.messages[0];
-    
+    // add a new messages to the collection
     this.referenceChatMessages.add({
       _id: message._id,
       text: message.text,
@@ -108,11 +107,13 @@ export default class Chat extends React.Component {
   }
 
 
-
+  //when user sends a message; addMessage() gets called to add message to the collection
   onSend(messages = []) {
-    this.setState(previousState => ({
+    this.setState((previousState) => ({
       messages: GiftedChat.append(previousState.messages, messages),
-    }))
+    }), () => {
+      this.addMessage();
+    })
   }
 
   //renderSystemMessage function renders a system message; the text color depends on the set background color
@@ -126,7 +127,7 @@ export default class Chat extends React.Component {
     );
   }
   
-
+//renderBubble function defines style of user messages
   renderBubble(props) {
     return (
       <Bubble
@@ -138,6 +139,14 @@ export default class Chat extends React.Component {
         }}
       />
     )
+  }
+
+  //dont receive updates from collection
+  componentWillUnmount() {
+    //stop listening to authentication
+    this.authUnsubscribe();
+    //stop listening for changes
+    this.unsubscribe();
   }
 
   render() {
@@ -152,7 +161,16 @@ export default class Chat extends React.Component {
         flex: 1, 
         backgroundColor: bgColor,
         }}>
-          <Text>{this.state.loggedInText}</Text>
+          <Text style={{
+          fontSize: 14,
+          color: '#555555',
+          backgroundColor: '#FFFFFF',
+          fontWeight: "400",
+          padding: 10, 
+          borderRadius: 50,
+          margin: 15,
+          alignSelf: 'center',
+        }}>Hello {name}</Text>
           <GiftedChat
             messages={this.state.messages}
             onSend={messages => this.onSend(messages)}
