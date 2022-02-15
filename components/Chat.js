@@ -48,7 +48,7 @@ export default class Chat extends React.Component {
 
   componentDidMount() {
      // Set the page title once Chat is loaded
-     let { name } = this.props.route.params
+     let { name } = this.props.route.params;
      // Adds the name to top of screen
      this.props.navigation.setOptions({ title: name })
      
@@ -69,7 +69,7 @@ export default class Chat extends React.Component {
           .onSnapshot(this.onCollectionUpdate);
 
       
-      // user can sign in anonymously
+      // user can sign in anonymously -> listen to authentication events
       this.authUnsubscribe = firebase.auth().onAuthStateChanged(async (user) => {
           if (!user) {
               await firebase.auth().signInAnonymously();
@@ -220,6 +220,7 @@ export default class Chat extends React.Component {
 
   //dont receive updates from collection
   componentWillUnmount() {
+    // close connections when we close the app
     NetInfo.fetch().then((connection) => {
       if (connection.isConnected) {
     //stop listening to authentication
