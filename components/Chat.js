@@ -52,10 +52,6 @@ export default class Chat extends React.Component {
      // Adds the name to top of screen
      this.props.navigation.setOptions({ title: name })
      
-     //Creating references to my messages collection
-     this.referenceChatMessages = firebase
-     .firestore()
-     .collection("messages");
 
      //To find out user's connection status
      NetInfo.fetch().then(connection => {
@@ -87,12 +83,11 @@ export default class Chat extends React.Component {
 
           //referencing messages of current user
           this.refMsgsUser = firebase
-          .firestore()
-          .collection("messages")
-          .where("uid", "==", this.state.uid);
-          });
-          //save messages when online
-          this.saveMessages();
+              .firestore()
+              .collection("messages")
+              .where("uid", "==", this.state.uid);
+              });
+         
 
       } else {
           this.setState({ isConnected: false });
@@ -123,6 +118,7 @@ export default class Chat extends React.Component {
     this.setState({
       messages : messages,
     });
+    this.saveMessages();
   };
 
 
