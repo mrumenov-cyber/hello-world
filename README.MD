@@ -5,7 +5,7 @@
  https://www.youtube.com/watch?v=pYPQHUVuvjw
 
  # App Preview
- ![ScreenShot](https://github.com/mrumenov-cyber/hello-world/AppPreview.png "Screenshot 1")
+ ![ScreenShot](https://github.com/mrumenov-cyber/hello-world/blob/5.5/AppPreview.png "Screenshot 1")
 
 # Key Features
  - A page where users can enter their name and choose a background color for the chat screen before joining the chat.
