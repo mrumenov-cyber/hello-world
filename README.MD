@@ -1,6 +1,12 @@
 # Overview
  ChatApp is a chat app for mobile devices using React Native. The app provides users with a chat interface and options to share images and their location.
 
+ # YouTube
+ https://www.youtube.com/watch?v=pYPQHUVuvjw
+
+ # App Preview
+ ![ScreenShot](https://github.com/mrumenov-cyber/hello-world/blob/5.5/AppPreview.png "Screenshot 1")
+
 # Key Features
  - A page where users can enter their name and choose a background color for the chat screen before joining the chat.
  - A page displaying the conversation, as well as an input field and submit button.
